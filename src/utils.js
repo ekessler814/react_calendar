@@ -1,5 +1,8 @@
+
+// helper function to determine if given year is leap year
 const leapYear = (year) => ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
 
+// some hardcoded data about the months and provinces to assist in generating our calendar
 const calendarData = { months: {
     january: {days: 31, order: 1},
     february: {days: 28, order: 2},
@@ -69,12 +72,15 @@ const calendarData = { months: {
   }, currentProvince: 'Alberta'
 }
 
+// add a leading zero an int and return as str if single digit
 const addLeadingZero = (num) =>  num < 10 ? '0' + num : num
 
+// capitalize first letter of a string
  const capitalize = (s) => {
     return s[0].toUpperCase() + s.slice(1);
 }
 
+// format date object into the string format '2022-12-31'
 const formatDate = (d) => {
   const mPlus = d.getMonth() + 1
   const month = mPlus < 10 ? '0' + mPlus : mPlus
@@ -82,7 +88,13 @@ const formatDate = (d) => {
   return `${d.getFullYear()}-${month}-${day}`
 }
 
+// generate a grid of 42 cells representing calendar days. Pad unused days with 0's
 const genDaysArr = (days, firstDay, leap) => {
+  /* days is an array rerpesenting all the days in a given month, firstDay tells
+  use the first day of the month (ie monday) in integer format, leap is a
+  bool which indicated if leap year
+  */
+
   const row1 = []
   const row2 = []
   const row3 = []
@@ -90,6 +102,8 @@ const genDaysArr = (days, firstDay, leap) => {
   const row5 = []
   const row6 = []
   let iter = 1
+
+  // we can assume if month has 28 days it is feb
   const leaped = days === 28 && leap ? 29 : days
   for (let i = 1; i <= leaped; i++) {
     if (iter > leaped) { break }
@@ -108,15 +122,21 @@ const genDaysArr = (days, firstDay, leap) => {
     }
     iter ++
   }
+
+  // pad front with zeroes
   while (row1.length < 7) {
     row1.unshift(0)
   }
+
+  // pad second last row with zeroes
   while (row5.length < 7) {
     row5.push(0)
   }
+  // pad last row with zeroes
   while (row6.length < 7) {
     row6.push(0)
   }
+  // 6 arrays of 7 elements
   return [row1, row2, row3, row4, row5, row6]
 }
 

@@ -217,6 +217,7 @@ const Calendar = () => {
 
   return (
     <CalendarContext.Provider value={{state, setState}}>
+      {/* Pass state and setState to children using context*/}
       <div style={styles.containerStyle}>
       <h1 style={{paddingRight: 20}}>{'Calendar App'}</h1>
       <div style={styles.flexRow}>
